@@ -1,0 +1,33 @@
+{
+       "Version": "2008-10-17",
+       "Statement": [
+           {
+               "Effect": "Allow",
+               "Principal": "*",
+               "Action": "s3:GetObject",
+               "Resource": [
+                   "arn:aws:s3:::c85205a1816270l4418703t1w946914026251-s3bucket-sc2ktcvzen8p/*",
+                   "arn:aws:s3:::c85205a1816270l4418703t1w946914026251-s3bucket-sc2ktcvzen8p"
+               ],
+               "Condition": {
+                   "IpAddress": {
+                       "aws:SourceIp": [
+                           "27.34.16.249/32"
+                       ]
+                   }
+               }
+           },
+           {
+               "Sid": "DenyOneObjectIfRequestNotSigned",
+               "Effect": "Deny",
+               "Principal": "*",
+               "Action": "s3:GetObject",
+               "Resource": "arn:aws:s3:::c85205a1816270l4418703t1w946914026251-s3bucket-sc2ktcvzen8p/report.html",
+               "Condition": {
+                   "StringNotEquals": {
+                       "s3:authtype": "REST-QUERY-STRING"
+                   }
+               }
+           }
+       ]
+}
